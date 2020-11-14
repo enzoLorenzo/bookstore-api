@@ -5,5 +5,5 @@ import org.springframework.stereotype.Repository;
 import pl.rscorporation.bookstoreapi.dao.models.Book;
 
 @Repository
-public interface BookStoreRepo extends CrudRepository<Book, Long> {
+public interface BookRepository extends CrudRepository<Book, Long> {
 }
