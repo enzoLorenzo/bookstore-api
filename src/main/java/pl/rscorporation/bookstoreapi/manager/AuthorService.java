@@ -16,16 +16,15 @@ public class AuthorService {
 
     private AuthorRepository authorRepository;
 
-    @Autowired
     public AuthorService(AuthorRepository authorRepository) {
         this.authorRepository = authorRepository;
     }
 
-    @EventListener(ApplicationReadyEvent.class)
-    public void fillDB() {
-        save(new Author(1L, "Szymon", "Lorenc", "Poland"));
-        save(new Author(2L, "Radosław", "Kraj", "Poland"));
-    }
+//    @EventListener(ApplicationReadyEvent.class)
+//    public void fillDB() {
+//        save(new Author(1L, "Szymon", "Lorenc", "Poland"));
+//        save(new Author(2L, "Radosław", "Kraj", "Poland"));
+//    }
 
     public Optional<Author> findById(Long id) {
         return authorRepository.findById(id);

@@ -34,12 +34,13 @@ public class AuthorController {
     }
 
     @PostMapping
-    public Author addAuthor(@RequestBody Author author) {
+    public Author addAuthor(@RequestBody Author author)    {
         return authorService.save(author);
     }
 
     @PutMapping
-    public Author updateAuthor(@RequestBody Author author) {
+    public Author updateAuthor(@RequestBody Author author)
+    {
         return authorService.save(author);
     }
 

@@ -1,10 +1,12 @@
 package pl.rscorporation.bookstoreapi.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.rscorporation.bookstoreapi.dao.models.Book;
 import pl.rscorporation.bookstoreapi.manager.BookService;
 
+import java.util.List;
 import java.util.Optional;
 
 @RestController
@@ -13,19 +15,26 @@ public class BookController {
 
     private BookService bookService;
 
-    @Autowired
     public BookController(BookService bookService){
         this.bookService = bookService;
     }
 
     @GetMapping
-    public Iterable<Book> getBooks() {
+    public List<Book> getBooks() {
         return bookService.findAll();
     }
 
     @GetMapping("/{id}")
-    public Optional<Book> getBookById(@PathVariable Long id) {
-        return bookService.findById(id);
+    public ResponseEntity<Book> getBookById(@PathVariable Long id) {
+
+        Book toReturn = bookService.findById(id).get();
+        System.out.println(toReturn);
+        return ResponseEntity.ok(toReturn);
+    }
+
+    @GetMapping("/author/{authorId}")
+    public List<Book> getBooksByAuthorId(@PathVariable Long authorId){
+        return bookService.findByAuthorId(authorId);
     }
 
     @PostMapping
