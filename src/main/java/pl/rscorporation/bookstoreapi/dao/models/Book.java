@@ -1,5 +1,6 @@
 package pl.rscorporation.bookstoreapi.dao.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import lombok.*;
 import org.springframework.lang.NonNull;
 
@@ -24,8 +25,26 @@ public class Book {
 
     @ManyToOne
     @JoinColumn(name = "author_id")
+    @JsonBackReference
     private Author author;
 
+    public void setIsbn(String isbn) {
+        this.isbn = isbn;
+    }
 
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
+    public void setPrice(BigDecimal price) {
+        this.price = price;
+    }
+
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
+
+    public void setAuthor(Author author) {
+        this.author = author;
+    }
 }

@@ -1,12 +1,18 @@
 package pl.rscorporation.bookstoreapi.manager;
 
+import org.apache.coyote.Response;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.context.event.ApplicationReadyEvent;
 import org.springframework.context.event.EventListener;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.rscorporation.bookstoreapi.dao.AuthorRepository;
+import pl.rscorporation.bookstoreapi.dao.dto.AuthorReadDTO;
+import pl.rscorporation.bookstoreapi.dao.dto.AuthorWriteDTO;
 import pl.rscorporation.bookstoreapi.dao.models.Author;
+import pl.rscorporation.bookstoreapi.dao.models.Book;
 
+import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
@@ -20,14 +26,10 @@ public class AuthorService {
         this.authorRepository = authorRepository;
     }
 
-//    @EventListener(ApplicationReadyEvent.class)
-//    public void fillDB() {
-//        save(new Author(1L, "Szymon", "Lorenc", "Poland"));
-//        save(new Author(2L, "Radosław", "Kraj", "Poland"));
-//    }
-
-    public Optional<Author> findById(Long id) {
-        return authorRepository.findById(id);
+    public AuthorReadDTO findById(Long id) {
+        Author author = authorRepository.findById(id)
+                .orElseThrow(() -> new IllegalArgumentException("Author with this id not exists"));
+        return new AuthorReadDTO(author);
     }
 
     public Iterable<Author> findByCountry(String country) {
@@ -36,15 +38,21 @@ public class AuthorService {
                 .collect(Collectors.toList());
     }
 
-    public Iterable<Author> findAll() {
-        return authorRepository.findAll();
+    public List<AuthorReadDTO> findAll() {
+        List<Author> authors =  authorRepository.findAll();
+        return authors.stream()
+                .map(author -> new AuthorReadDTO(author))
+                .collect(Collectors.toList());
     }
 
-    public Author save(Author author) {
-        return authorRepository.save(author);
+    public Author save(AuthorWriteDTO author) {
+        Author toSave = author.createAuthor();
+        return authorRepository.save(toSave);
     }
 
     public void deleteById(Long id) {
+        if(!authorRepository.existsById(id))
+            throw new IllegalArgumentException("Author with given id not exists");
         authorRepository.deleteById(id);
     }
 }
