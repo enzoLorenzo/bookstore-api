@@ -8,6 +8,7 @@ import pl.rscorporation.bookstoreapi.dao.AuthorRepository;
 import pl.rscorporation.bookstoreapi.dao.dto.AuthorReadDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.AuthorWriteDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.BookReadDTO;
+import pl.rscorporation.bookstoreapi.RestNames;
 import pl.rscorporation.bookstoreapi.dao.models.Author;
 import pl.rscorporation.bookstoreapi.manager.AuthorService;
 
@@ -15,7 +16,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/authors")
+@RequestMapping(RestNames.AUTHORS_PATH)
 public class AuthorController {
 
     private AuthorService authorService;
