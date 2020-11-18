@@ -14,4 +14,5 @@ interface SqlAuthorRepository extends AuthorRepository, JpaRepository<Author, Lo
 
     @Query("select a from Author a left join fetch a.books")
     List<Author> findAll(@Param("authorId") Long authorId);
+
 }

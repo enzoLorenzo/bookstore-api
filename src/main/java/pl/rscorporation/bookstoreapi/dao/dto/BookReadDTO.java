@@ -10,11 +10,13 @@ import java.time.LocalDate;
 @Getter
 @Setter
 public class BookReadDTO {
+    private Long id;
     private String title;
     private BigDecimal price;
     private LocalDate releaseDate;
 
     public BookReadDTO(Book book){
+        this.id = book.getId();
         this.title = book.getTitle();
         this.price = book.getPrice();
         this.releaseDate = book.getReleaseDate();

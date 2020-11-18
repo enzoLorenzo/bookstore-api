@@ -7,12 +7,12 @@ import org.springframework.web.bind.annotation.*;
 import pl.rscorporation.bookstoreapi.dao.AuthorRepository;
 import pl.rscorporation.bookstoreapi.dao.dto.AuthorReadDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.AuthorWriteDTO;
+import pl.rscorporation.bookstoreapi.dao.dto.BookReadDTO;
 import pl.rscorporation.bookstoreapi.dao.models.Author;
-import pl.rscorporation.bookstoreapi.dao.models.Book;
 import pl.rscorporation.bookstoreapi.manager.AuthorService;
 
+import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/authors")
@@ -33,7 +33,13 @@ public class AuthorController {
 
     @GetMapping("/{id}")
     public ResponseEntity<AuthorReadDTO> getAuthorById(@PathVariable Long id) {
-        return ResponseEntity.ok(authorService.findById(id));
+        return ResponseEntity.ok(authorService.findAuthorById(id));
+    }
+
+    @GetMapping("/{authorId}/books")
+    public ResponseEntity<List<BookReadDTO>> getAuthorBooks(@PathVariable Long authorId){
+        logger.info("Got all author books");
+        return ResponseEntity.ok(authorService.findAuthorBooks(authorId));
     }
 
     //?
@@ -42,23 +48,25 @@ public class AuthorController {
         return authorService.findByCountry(country);
     }
 
+
     @PostMapping
-    public Author addAuthor(@RequestBody AuthorWriteDTO author)    {
-        return authorService.save(author);
+    public ResponseEntity<AuthorReadDTO> addAuthor(@RequestBody AuthorWriteDTO author){
+        AuthorReadDTO saved = authorService.saveAuthor(author);
+        logger.info("Author added");
+        return ResponseEntity.created(URI.create("/" + saved.getId())).body(saved);
     }
 
     //?
     @PutMapping
-    public Author updateAuthor(@RequestBody AuthorWriteDTO author)
-    {
-        logger.info("Author added");
-        return authorService.save(author);
+    public AuthorReadDTO updateAuthor(@RequestBody AuthorWriteDTO author){
+        logger.info("Author updated");
+        return authorService.saveAuthor(author);
     }
 
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteAuthorById(@PathVariable Long id) {
-        authorService.deleteById(id);
+        authorService.deleteAuthorById(id);
         logger.warn("Author with id: " + id + "was deleted");
         return ResponseEntity.noContent().build();
     }

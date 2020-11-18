@@ -2,18 +2,15 @@ package pl.rscorporation.bookstoreapi.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.rscorporation.bookstoreapi.dao.dto.BookReadDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.BookWriteDTO;
-import pl.rscorporation.bookstoreapi.dao.models.Book;
 import pl.rscorporation.bookstoreapi.manager.BookService;
 
 import java.net.URI;
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/books")
@@ -39,25 +36,25 @@ public class BookController {
 
     @GetMapping("/{id}")
     public ResponseEntity<BookReadDTO> getBookById(@PathVariable Long id) {
-        return ResponseEntity.ok(bookService.findById(id));
+        return ResponseEntity.ok(bookService.findBookById(id));
     }
 
     @PostMapping
-    public ResponseEntity<Book> addBook(@RequestBody BookWriteDTO book) {
-        Book created = bookService.save(book);
+    public ResponseEntity<BookReadDTO> addBook(@RequestBody BookWriteDTO book) {
+        BookReadDTO created = bookService.addBook(book);
         return ResponseEntity.created(URI.create("/" + created.getId())).body(created);
     }
 
 
     //?
     @PutMapping
-    public Book updateBook(@RequestBody BookWriteDTO book) {
-        return bookService.save(book);
+    public BookReadDTO updateBook(@RequestBody BookWriteDTO book) {
+        return bookService.addBook(book);
     }
 
     @DeleteMapping("/{id}")
     public ResponseEntity<?> deleteBookById(@PathVariable Long id) {
-        bookService.deleteById(id);
+        bookService.deleteBookById(id);
         logger.warn("Book with id: " + id + "was deleted");
         return ResponseEntity.noContent().build();
     }

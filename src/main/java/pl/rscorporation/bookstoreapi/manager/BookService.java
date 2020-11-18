@@ -26,17 +26,17 @@ public class BookService {
     private AuthorRepository authorRepository;
 
     public BookService(BookRepository bookRepository, AuthorRepository authorRepository){
-        this.authorRepository = authorRepository;
         this.bookRepository = bookRepository;
+        this.authorRepository = authorRepository;
     }
 
-    public List<Book> findByAuthorId(Long id){
-        return authorRepository.findById(id)
-                .map(author -> bookRepository.findByAuthorId(author.getId()))
-                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists"));
-    }
+//    public List<Book> findBookByAuthorId(Long id){
+//        return authorRepository.findById(id)
+//                .map(author -> bookRepository.findByAuthorId(author.getId()))
+//                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists"));
+//    }
 
-    public BookReadDTO findById(Long id){
+    public BookReadDTO findBookById(Long id){
         Book toReturn = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book with this id not exists"));
         return new BookReadDTO(toReturn);
     }
@@ -54,15 +54,16 @@ public class BookService {
                 .collect(Collectors.toList());
     }
 
-    public Book save(BookWriteDTO book){
+    public BookReadDTO addBook(BookWriteDTO book){
         Author bookAuthor = authorRepository.findById(book.getAuthorId())
-                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists"));
+                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists insert correct book author"));
 
-        return bookRepository.save(book.toBook(bookAuthor));
+        Book saved = bookRepository.save(book.toBook(bookAuthor));
+        return new BookReadDTO(saved);
     }
 
 
-    public void deleteById(Long id)
+    public void deleteBookById(Long id)
     {
         if(!bookRepository.existsById(id))
             throw new IllegalArgumentException("Book with given id not exists");

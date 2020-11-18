@@ -13,12 +13,14 @@ import java.util.stream.Collectors;
 @Getter
 @Setter
 public class AuthorReadDTO {
+    private Long id;
     private String firstName;
     private String surname;
     private String country;
     private Set<BookReadDTO> books;
 
     public AuthorReadDTO(Author author){
+        this.id = author.getId();
         this.firstName = author.getFirstName();
         this.surname = author.getSurname();
         this.country = author.getCountry();
