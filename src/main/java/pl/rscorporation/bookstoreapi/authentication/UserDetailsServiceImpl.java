@@ -12,7 +12,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     @Override
     public UserDetails loadUserByUsername(String s) throws UsernameNotFoundException {
         return  User.builder()
-                .username("user")
+                .username(s)
                 .password(new BCryptPasswordEncoder().encode("user"))
                 .roles("USER")
                 .build();

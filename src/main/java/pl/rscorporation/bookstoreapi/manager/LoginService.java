@@ -18,6 +18,7 @@ public class LoginService implements AuthenticationManager {
         String username = authentication.getPrincipal().toString();
         String password = authentication.getCredentials().toString();
 
+        System.out.println("DVJASvasidvbisdvasvdvsaduasdvhasvd");
         UserDetails userBD = User.builder()
                 .username("user")
                 .password(new BCryptPasswordEncoder().encode("user"))

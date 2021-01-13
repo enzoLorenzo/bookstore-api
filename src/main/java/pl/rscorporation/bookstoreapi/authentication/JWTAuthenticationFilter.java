@@ -10,6 +10,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 import pl.rscorporation.bookstoreapi.dao.models.UserMyself;
+import pl.rscorporation.bookstoreapi.manager.LoginService;
 
 
 import javax.servlet.FilterChain;
@@ -21,10 +22,10 @@ import java.util.Date;
 import static pl.rscorporation.bookstoreapi.SecurityConstants.*;
 
 public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+    //TODO add configure class with bean
+    private LoginService authenticationManager;
 
-    private AuthenticationManager authenticationManager;
-
-    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+    public JWTAuthenticationFilter(LoginService authenticationManager) {
         this.authenticationManager = authenticationManager;
 
         setFilterProcessesUrl(SIGN_UP_URL);
