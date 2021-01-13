@@ -1,10 +1,5 @@
 package pl.rscorporation.bookstoreapi.manager;
 
-import org.apache.coyote.Response;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.context.event.ApplicationReadyEvent;
-import org.springframework.context.event.EventListener;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import pl.rscorporation.bookstoreapi.dao.AuthorRepository;
 import pl.rscorporation.bookstoreapi.dao.BookRepository;
@@ -12,10 +7,8 @@ import pl.rscorporation.bookstoreapi.dao.dto.AuthorReadDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.AuthorWriteDTO;
 import pl.rscorporation.bookstoreapi.dao.dto.BookReadDTO;
 import pl.rscorporation.bookstoreapi.dao.models.Author;
-import pl.rscorporation.bookstoreapi.dao.models.Book;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 import java.util.stream.StreamSupport;
 
@@ -45,14 +38,14 @@ public class AuthorService {
     }
 
     public List<AuthorReadDTO> findAll() {
-        List<Author> authors =  authorRepository.findAll();
+        List<Author> authors = authorRepository.findAll();
         return authors.stream()
                 .map(author -> new AuthorReadDTO(author))
                 .collect(Collectors.toList());
     }
 
-    public List<BookReadDTO> findAuthorBooks(Long authorId){
-        if(!authorRepository.existsById(authorId))
+    public List<BookReadDTO> findAuthorBooks(Long authorId) {
+        if (!authorRepository.existsById(authorId))
             throw new IllegalArgumentException("Author with given id not exists");
         return bookRepository.findByAuthorId(authorId).stream()
                 .map(BookReadDTO::new)
@@ -65,7 +58,7 @@ public class AuthorService {
     }
 
     public void deleteAuthorById(Long id) {
-        if(!authorRepository.existsById(id))
+        if (!authorRepository.existsById(id))
             throw new IllegalArgumentException("Author with given id not exists");
         authorRepository.deleteById(id);
     }
