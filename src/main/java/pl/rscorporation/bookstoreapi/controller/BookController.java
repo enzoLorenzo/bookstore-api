@@ -15,7 +15,7 @@ import java.net.URI;
 import java.util.List;
 
 @RestController
-@RequestMapping(RestNames.BOOKS_PATH)
+@RequestMapping("books")
 public class BookController {
 
     private BookService bookService;
@@ -25,17 +25,17 @@ public class BookController {
         this.bookService = bookService;
     }
 
-    @GetMapping(params = {"!size", "!page", "!sort"})
-    public ResponseEntity<List<BookReadDTO>> getBooks() {
-        logger.info("Get all books");
-        return ResponseEntity.ok(bookService.findAll());
-    }
+//    @GetMapping(params = {"!size", "!page", "!sort"})
+//    public ResponseEntity<List<BookReadDTO>> getBooks() {
+//        logger.info("Custom pageable");
+//        return ResponseEntity.ok(bookService.findAll());
+//    }
 
     @ApiOperation(value = "Get all books")
     @GetMapping
-    public ResponseEntity<List<BookReadDTO>> getBooks(Pageable page) {
-        logger.info("Custom pageable");
-        return ResponseEntity.ok(bookService.findAll(page));
+    public ResponseEntity<List<BookReadDTO>> getBooks() {
+        logger.info("Get all books");
+        return ResponseEntity.ok(bookService.findAll());
     }
 
     @ApiOperation(value = "Get book by identification")
