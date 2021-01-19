@@ -22,7 +22,7 @@ public class AuthorController {
     private AuthorService authorService;
     private static final Logger logger = LoggerFactory.getLogger(AuthorController.class);
 
-    public AuthorController(AuthorService authorService, AuthorRepository authorRepository) {
+    public AuthorController(AuthorService authorService) {
         this.authorService = authorService;
     }
 
@@ -33,22 +33,15 @@ public class AuthorController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<AuthorReadDTO> getAuthorById(@PathVariable Long id) {
+    public ResponseEntity<AuthorReadDTO> getAuthorById(@PathVariable long id) {
         return ResponseEntity.ok(authorService.findAuthorById(id));
     }
 
     @GetMapping("/{authorId}/books")
-    public ResponseEntity<List<BookReadDTO>> getAuthorBooks(@PathVariable Long authorId){
+    public ResponseEntity<List<BookReadDTO>> getAuthorBooks(@PathVariable long authorId){
         logger.info("Got all author books");
         return ResponseEntity.ok(authorService.findAuthorBooks(authorId));
     }
-
-    //?
-    @GetMapping("/{country}")
-    public Iterable<Author> getAuthorsByCountry(@PathVariable String country) {
-        return authorService.findByCountry(country);
-    }
-
 
     @PostMapping
     public ResponseEntity<AuthorReadDTO> addAuthor(@RequestBody AuthorWriteDTO author){

@@ -62,7 +62,9 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                         "/swagger-ui.html",
                         "/webjars/**",
                         "/login*").permitAll()
-                .antMatchers(HttpMethod.POST).hasRole(Roles.ADMIN.toString())
+                .antMatchers(HttpMethod.POST).hasAuthority(Roles.ADMIN.getKey())
+                .antMatchers(HttpMethod.PUT).hasAuthority(Roles.ADMIN.getKey())
+                .antMatchers(HttpMethod.DELETE).hasAuthority(Roles.ADMIN.getKey())
                 .anyRequest().authenticated()
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
         http.addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class);
@@ -72,6 +74,6 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     public void configure(WebSecurity web) {
         web.ignoring().antMatchers(HttpMethod.POST, "/login*");
         web.ignoring().antMatchers(HttpMethod.POST, "/log-out*");
-        web.ignoring().antMatchers(HttpMethod.POST, "/user*");
+        web.ignoring().antMatchers("/console/**");
     }
 }

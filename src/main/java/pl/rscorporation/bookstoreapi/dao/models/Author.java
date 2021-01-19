@@ -21,7 +21,7 @@ public class Author {
     private String surname;
     private String country;
 
-    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "author")
+    @OneToMany(cascade = CascadeType.REMOVE, mappedBy = "author", fetch = FetchType.LAZY)
     @JsonManagedReference
     private Set<Book> books;
 

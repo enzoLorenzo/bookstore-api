@@ -11,8 +11,8 @@ import java.util.List;
 
 @Repository
 interface SqlAuthorRepository extends AuthorRepository, JpaRepository<Author, Long>{
-
-    @Query("select a from Author a left join fetch a.books")
-    List<Author> findAll(@Param("authorId") Long authorId);
+//
+//    @Query("select a from Author a left join fetch a.books")
+//    List<Author> findAll(@Param("authorId") Long authorId);
 
 }

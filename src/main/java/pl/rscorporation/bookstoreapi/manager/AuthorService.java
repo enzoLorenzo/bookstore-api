@@ -29,14 +29,6 @@ public class AuthorService {
         return new AuthorReadDTO(author);
     }
 
-
-    //Is this needed? If yes refactor it
-    public Iterable<Author> findByCountry(String country) {
-        return StreamSupport.stream(authorRepository.findAll().spliterator(), false)
-                .filter(element -> element.getCountry().equals(country))
-                .collect(Collectors.toList());
-    }
-
     public List<AuthorReadDTO> findAll() {
         List<Author> authors = authorRepository.findAll();
         return authors.stream()

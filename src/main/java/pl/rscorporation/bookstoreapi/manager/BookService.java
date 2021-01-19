@@ -25,7 +25,7 @@ public class BookService {
     private BookRepository bookRepository;
     private AuthorRepository authorRepository;
 
-    public BookService(BookRepository bookRepository, AuthorRepository authorRepository){
+    public BookService(BookRepository bookRepository, AuthorRepository authorRepository) {
         this.bookRepository = bookRepository;
         this.authorRepository = authorRepository;
     }
@@ -36,25 +36,25 @@ public class BookService {
 //                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists"));
 //    }
 
-    public BookReadDTO findBookById(Long id){
+    public BookReadDTO findBookById(Long id) {
         Book toReturn = bookRepository.findById(id).orElseThrow(() -> new IllegalArgumentException("Book with this id not exists"));
         return new BookReadDTO(toReturn);
     }
 
-    public List<BookReadDTO> findAll(){
+    public List<BookReadDTO> findAll() {
         return bookRepository.findAll().stream()
                 .map(book -> new BookReadDTO(book))
                 .collect(Collectors.toList());
     }
 
-    public List<BookReadDTO> findAll(Pageable page){
+    public List<BookReadDTO> findAll(Pageable page) {
         return bookRepository.findAll(page)
                 .stream()
                 .map(BookReadDTO::new)
                 .collect(Collectors.toList());
     }
 
-    public BookReadDTO addBook(BookWriteDTO book){
+    public BookReadDTO addBook(BookWriteDTO book) {
         Author bookAuthor = authorRepository.findById(book.getAuthorId())
                 .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists insert correct book author"));
 
@@ -62,10 +62,8 @@ public class BookService {
         return new BookReadDTO(saved);
     }
 
-
-    public void deleteBookById(Long id)
-    {
-        if(!bookRepository.existsById(id))
+    public void deleteBookById(Long id) {
+        if (!bookRepository.existsById(id))
             throw new IllegalArgumentException("Book with given id not exists");
         bookRepository.deleteById(id);
     }

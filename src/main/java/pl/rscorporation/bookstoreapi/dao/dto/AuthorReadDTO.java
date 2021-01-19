@@ -17,15 +17,11 @@ public class AuthorReadDTO {
     private String firstName;
     private String surname;
     private String country;
-    private Set<BookReadDTO> books;
 
     public AuthorReadDTO(Author author){
         this.id = author.getId();
         this.firstName = author.getFirstName();
         this.surname = author.getSurname();
         this.country = author.getCountry();
-        this.books = author.getBooks().stream()
-                .map(book -> new BookReadDTO(book))
-                .collect(Collectors.toSet());
     }
 }

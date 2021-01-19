@@ -107,3 +107,6 @@ insert into book (isbn, title, price, currency, release_date, author_id) values 
 insert into book (isbn, title, price, currency, release_date, author_id) values ('xxxxxxxxxxx97', 'tytul_97', 58, 'pln', '2020-08-11T11:05:22.126',10);
 insert into book (isbn, title, price, currency, release_date, author_id) values ('xxxxxxxxxxx98', 'tytul_98', 59, 'pln', '2020-08-10T11:05:22.126',10);
 insert into book (isbn, title, price, currency, release_date, author_id) values ('xxxxxxxxxxx99', 'tytul_99', 59, 'pln', '2020-08-09T11:05:22.126',10);
+insert into user (username, password, role) values ('user', '$2y$12$Jp1QqwQg6.CDA01/j825GOBslbOM4oUFNOx/4v7Ofd6LKMMT3g/RO', 'user');
+insert into user (username, password, role) values ('admin', '$2y$12$5qRHXxOxnYo4TrYoR/SfMeHtYbxm8xIk0i1Sky/7JrPe2LcJ9kx6G', 'admin');
+
