@@ -50,11 +50,11 @@ public class AuthorController {
         return ResponseEntity.created(URI.create("/" + saved.getId())).body(saved);
     }
 
-    //?
-    @PutMapping
-    public AuthorReadDTO updateAuthor(@RequestBody AuthorWriteDTO author){
+    //add id to modify
+    @PutMapping("/{id}")
+    public ResponseEntity<AuthorReadDTO> updateAuthor(@RequestBody AuthorWriteDTO author, @PathVariable long id){
         logger.info("Author updated");
-        return authorService.saveAuthor(author);
+        return ResponseEntity.ok(authorService.putAuthor(author, id));
     }
 
 

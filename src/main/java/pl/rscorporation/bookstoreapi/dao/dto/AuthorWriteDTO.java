@@ -11,12 +11,14 @@ import pl.rscorporation.bookstoreapi.dao.models.Author;
 @NoArgsConstructor
 @AllArgsConstructor
 public class AuthorWriteDTO {
+    private long id;
     private String firstName;
     private String surname;
     private String country;
 
     public Author createAuthor(){
         Author authorToReturn = new Author();
+        authorToReturn.setId(id);
         authorToReturn.setCountry(country);
         authorToReturn.setFirstName(firstName);
         authorToReturn.setSurname(surname);

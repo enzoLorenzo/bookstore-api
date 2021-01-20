@@ -49,6 +49,15 @@ public class AuthorService {
         return new AuthorReadDTO(saved);
     }
 
+    public AuthorReadDTO putAuthor(AuthorWriteDTO author, long authorId) {
+        if (!authorRepository.existsById(authorId))
+            throw new IllegalArgumentException();
+        Author saved = authorRepository.findById(authorId)
+                .orElseThrow(() -> new IllegalArgumentException("Author with given id not exists"));
+        saved.setId(authorId);
+        return new AuthorReadDTO(saved.updateAuthor(author));
+    }
+
     public void deleteAuthorById(Long id) {
         if (!authorRepository.existsById(id))
             throw new IllegalArgumentException("Author with given id not exists");

@@ -126,15 +126,4 @@ class AuthorServiceTest {
         //then
         assertThat(resultToTest.get(0)).isInstanceOf(BookReadDTO.class);
     }
-
-    /*
-    public List<BookReadDTO> findAuthorBooks(Long authorId){
-        if(!authorRepository.existsById(authorId))
-            throw new IllegalArgumentException("Author with given id not exists");
-        return bookRepository.findByAuthorId(authorId).stream()
-                .map(BookReadDTO::new)
-                .collect(Collectors.toList());
-    }
-     */
-
 }
